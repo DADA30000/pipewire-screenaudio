@@ -9,11 +9,11 @@ use log::debug;
 use crate::helpers::JsonGetters;
 
 thread_local! {
-	static DUMP_CACHE: RefCell<Option<Vec<Value>>> = RefCell::new(None);
+  static DUMP_CACHE: RefCell<Option<Vec<Value>>> = RefCell::new(None);
 }
 
 fn get_pw_dump(invalidate_cache: bool) -> Vec<Value> {
-	let dump_cache = DUMP_CACHE.with_borrow(|x| x.clone());
+  let dump_cache = DUMP_CACHE.with_borrow(|x| x.clone());
   if !invalidate_cache && dump_cache.is_some() {
     return dump_cache.unwrap();
   }
@@ -31,8 +31,8 @@ fn get_pw_dump(invalidate_cache: bool) -> Vec<Value> {
 
   let result = dump.as_array().unwrap().iter().map(|node| node.clone()).collect::<Vec<_>>();
 
-	DUMP_CACHE.with_borrow_mut(|cache| *cache = Some(result.clone()));
-	result
+  DUMP_CACHE.with_borrow_mut(|cache| *cache = Some(result.clone()));
+  result
 }
 
 fn get_node_media_class(node: &Value) -> Result<String,String> {
